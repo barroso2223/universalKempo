@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var contactSection = document.getElementById("contact");
 
   if (stickyCta && contactSection && "IntersectionObserver" in window) {
-    var observer = new IntersectionObserver(
+    var ctaObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           stickyCta.style.transform = entry.isIntersecting
@@ -35,7 +35,39 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       { threshold: 0.15 },
     );
-    observer.observe(contactSection);
+    ctaObserver.observe(contactSection);
+  }
+
+  /* ---- restrained scroll-reveal for editorial sections ---- */
+  var revealEls = document.querySelectorAll(".reveal");
+  var prefersReducedMotion =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (
+    revealEls.length &&
+    "IntersectionObserver" in window &&
+    !prefersReducedMotion
+  ) {
+    var revealObserver = new IntersectionObserver(
+      function (entries, obs) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    revealEls.forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  } else {
+    revealEls.forEach(function (el) {
+      el.classList.add("in-view");
+    });
   }
 
   /* ---- inquiry form: friendly inline confirmation for Netlify AJAX submit ---- */
@@ -62,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(function () {
           formNote.textContent =
-            "Something went wrong. Please call 719-200-4906 or email info@Universalkempo.com.";
+            "Something went wrong. Please call 719-200-4906 or email info@maddoxkempo.com.";
         });
     });
   }
