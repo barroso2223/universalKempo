@@ -79,6 +79,10 @@ p {
   outline-offset: 2px;
 }
 
+section[id] {
+  scroll-margin-top: 130px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
@@ -541,7 +545,7 @@ p {
 
 /* ---------- programs (editorial rows) ---------- */
 .programs {
-  padding: 1rem 0 5rem;
+  padding: 0.5rem 0 5rem;
 }
 .programs h2 {
   color: var(--ink);
