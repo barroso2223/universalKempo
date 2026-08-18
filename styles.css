@@ -274,8 +274,8 @@ p {
   margin-right: auto;
 }
 .brand-logo {
-  width: 38px;
-  height: 38px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   flex: none;
   background: #fff;
